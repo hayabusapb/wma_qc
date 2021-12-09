@@ -1,9 +1,11 @@
-# Copyright (c) 2019 Pietro Astolfi, Emanuele Olivetti
-# MIT License
+# Copyright (c) 
+# DIPY TRK-VTK conversion A. Pastor
+# NIBABEL tract object optimization Pietro Astolfi, Emanuele Olivetti 2019
+# 
 import os
 import vtk
 from dipy.tracking.streamline import Streamlines
-# Adding dipy STreamlines to vtk conversion APB 2021
+
 
 import numpy as np
 import nibabel as nib
@@ -204,9 +206,9 @@ if __name__ == '__main__':
 
     np.random.seed(0)
     
+    # path to trk files here
     os.chdir('..')
     os.chdir('sub3602428_copy/ses-2/PFT_Tracking')
-    #trk_fn = 'sub-100206_var-FNAL_tract.trk'
     trk_fn = 'sub-3602428_ses-2__pft_tracking_prob_wm_seed_0.trk'
 
     # idxs = np.random.choice(500000, 200000, replace=True)
