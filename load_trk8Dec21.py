@@ -1,6 +1,6 @@
 # Copyright (c) 
-# DIPY TRK-VTK conversion A. Pastor
-# NIBABEL tract object optimization Pietro Astolfi, Emanuele Olivetti 2019
+# DIPY TRK-VTK conversion step A. Pastor, MNI, 2021
+# NIBABEL tract object optimization Pietro Astolfi, Emanuele Olivetti, MIT, 2019
 # 
 import os
 import vtk
