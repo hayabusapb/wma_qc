@@ -1,0 +1,15 @@
+Bootstrap: docker
+From: continuumio/miniconda3
+
+%setup
+mkdir -p ${SINGULARITY_ROOTFS}/Documents/
+
+%files
+ ./Documents/env16.yml /Documents/
+
+%post
+ /opt/conda/bin/conda env create -f /Documents/env16.yml -n basis
+  
+%runscript
+ exec /opt/conda/envs/$(head -n 1 env16.yml | cut -f 2 -d ' ')/bin/"$@"
+
