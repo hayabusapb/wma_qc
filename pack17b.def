@@ -1,0 +1,69 @@
+Bootstrap: docker
+
+From: continuumio/miniconda3
+
+
+    
+%setup
+
+cp -r /home/hayabusa/Slicer/ "${SINGULARITY_ROOTFS}"/Slicer/
+export PATH="${PATH}":/Slicer/bin/:/Slicer
+    
+%files
+
+packed_environment.tar.gz /packed_environment.tar.gz    
+    
+%environment
+
+LC_ALL=C
+LIBRARY_PATH = $PATH:/usr/local/lib:/${SINGULARITY_ROOTFS}/Slicer/lib/Slicer-4.11:/${SINGULARITY_ROOTFS}/Slicer/NA-MIC/Extensions-29738/SlicerDMRI/lib/Slicer-4.11/qt-loadable-modules:/${SINGULARITY_ROOTFS}/Slicer/lib/Slicer-4.11/qt-loadable-modules:/${SINGULARITY_ROOTFS}/Slicer/lib/Slicer-4.11/qt-loadable-modulesSlicer/lib/Teem-1.12.0:/${SINGULARITY_ROOTFS}/Slicer/lib/Teem-1.12.0:/${SINGULARITY_ROOTFS}/Slicer/lib/Python/lib
+
+QT_PLUGIN_PATH=${SINGULARITY_ROOTFS}/Slicer/bin/../lib/QtPlugins${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}
+export LC_ALL LIBRARY_PATH QT_PLUGIN_PATH
+
+%post
+
+export DEBIAN_FRONTEND=noninteractive
+tar xvzf /packed_environment.tar.gz -C /opt/conda
+conda-unpack
+rm /packed_environment.tar.gz
+   
+    
+apt-get update -qq
+apt-get install -y libpulse-dev \
+		    libnss3 \
+		    libglu1-mesa \
+		    wget \
+		    git \
+		    bzip2 \
+		    libglib2.0-0 \
+		    libxext6 \
+	            libsm6 \
+	            libxrender1 \
+	            python3-pip \
+	    
+#For 3DSlicer (APB)
+apt-get install -y --reinstall libxcb-xinerama0 \
+			   ca-certificates \
+			   libfontconfig1 \
+	 		   libxrender1 \
+ 	      		   libgl1-mesa-dev \
+			   libglu1-mesa-dev \
+			   libxtst6 \
+			   libxt-dev \
+			   libnss3-dev \
+			   libxcomposite-dev \
+			   libxcursor-dev \
+			   libxi-dev \
+			   libxrandr-dev \
+			   libasound2-dev \
+			   libegl1-mesa-dev \
+			   libxdamage1 \
+			   libxkbcommon-x11-0 \
+			   libgssapi-krb5-2 \
+			   libxcb-icccm4 \
+			   libxcb-image0 \
+			   libxcb-keysyms1 \
+			   libxcb-render-util0 \
+			   libxcb-shape0 \
+			   xvfb \
