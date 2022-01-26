@@ -1,12 +1,13 @@
-# wma_qc
+# wma_pipeline
 SJN22.sif  basic documentation. Alexandre Pastor-Bernier 26 Jan 2022 (McGill University)
 ########################################################################################
                                 
-# Original slicer recipe based on Lex (10 Dec 2021)                                                                                                           
+**# Original slicer recipe based on Lex (10 Dec 2021)**                                                                                                        
 wma_slicer
 https://github.com/hayabusapb/wma_qc/blob/Singularity/wma_slicer                                                                                                                                            
 
-# performance
+Performance:
+
 Fails when running within singularity in cluster sessions but succeds running in local builds.
 Errors concern dynamic library links in QT-loadable module -QT-gui framework and NA-MIC modules (even running Slicer with xvfb-run which solves x-server connection probs.).  Slicer can work disabling selective modules (CLI), but those are required for  wma harden transform step.                                                                                                                        
              
@@ -25,6 +26,7 @@ We cannot do ldconfig (ld.so.config) post-hoc on a frozen image and fix links to
 WORKAROUND: Decided to work on singularity sandbox version instead
                                                                                                                                     
 Sandbox is a better option than building non-editable .sif images iteratively for debugging purposes, because changes can be done on the run. Otherwise have to build from image and globus sync each time to destination for testing. Building from sandbox from within Beluga is not advised (sudo privileges revoked). The image is minimum 700MBs, our current is 2GB which is manageable. The working container can be frozen as a normal .sif files --                                                             
+**Sandbox recipe based on Docker image** 
 
 SlicerBuilt image based on Iassons (Andras Lasso, Queens U.)
 runs Slicer 4.11.0 (11-2020 version) from within container and works both within container in cluster and in local.
