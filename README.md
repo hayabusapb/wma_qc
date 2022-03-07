@@ -52,3 +52,14 @@ Details on Slicer Built:
 * Slicer 4.11.0 is used in harden transformed fiber clusters back into the input tractography space and
 SlicerDMRI is used further for diffusion measurements – but those do not apply here since our file comes from Tractoflow.
 --there are no diffusion measurements stored in the input files ---  The wma diffusionmeasuremnts tool was developed for the case when the tractography is run with a tool like ukftractography from Yogesh Rathi, which stores diffusion information in the vtk file.
+
+UPDATES 7Mar2022: 
+3DSlicer above version 4.10 loads Models by default as LPS. This causes problems on the inverse transform step because Slicer assumes LPS when it should take the file as RAS. A short-term work around is to use an older build of Slicer 4.10.2 and build it in the container.
+A long-term approach (not done yet) is to upgrade the wma libraries which are called in the pipe with # 3D Slicer output. SPACE=RAS # embedding in the header. That applies to created vtp files, whose header in xml can be changed by adding the following lines:
+    <FieldData>
+      <Array type="String" Name="SPACE" NumberOfTuples="1" format="ascii">
+        82 65 83 0
+      </Array>
+    </FieldData>
+ 
+The most recent image is SJN_7M22.sif which incorporates a build of the older slicer version 4.10.2
