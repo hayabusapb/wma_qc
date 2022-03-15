@@ -1,4 +1,4 @@
-#!/home/hayabusa/miniconda3/bin/python
+#!/home/conda/bin/python
 
 import os
 import argparse
@@ -46,7 +46,7 @@ def main():
 
 ######################
 ## Does conversion and saves
-    tracto = load_trk(in_data,in_data,bbox_valid_check=False)
+    tracto = load_trk(in_data,in_data,to_space='lpsmm',bbox_valid_check=False)
     save_tractogram(tracto,os.path.join(out_data, out2 + '.vtk'),bbox_valid_check=False)
     
 
