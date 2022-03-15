@@ -1,65 +1,54 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Dec  2 09:17:51 2021
-
-@author: Alexandre Pastor -- hayabusa
-"""
-
-# HEADER OF TRK FILE SEEMS INCOMPATIBLE . . . WHY 
+#!/home/conda/bin/python
 
 import os
-import vtk
-from dipy.tracking.streamline import Streamlines
-from dipy.io.streamline import load_tractogram
+import argparse
 
-path = os.getcwd()
-#os.chdir(os.path.dirname(os.path.abspath(__file__)))
-fname= 'sub3602428_copy/ses-2/PFT_Tracking/sub-3602428_ses-2__pft_tracking_prob_wm_seed_0.trk'
-absolutepath = os.path.join(path,fname)
-atlas = 'Documents/WMA_tutorial_data/ORG-Atlases-1.1.1/ORG-RegAtlas-100HCP/registration_atlas.vtk'
+try:
+    from dipy.io.streamline import load_trk, save_tractogram
+except:
+    print("<dipy> Error importing trk packages")
+    raise
 
-seed = 'sub3602428_copy/ses-2/PFT_Seeding_Mask/sub-3602428_ses-2__pft_seeding_mask.nii'
-#load_trk needs 2 arg, positional atlas and file?
-streams, hdr = load_tractogram(fname,'same')
-streamlines = Streamlines(streams)
-saveStreamlinesVTK(streamlines,'sub-3602428.vtk')
 
-def saveStreamlinesVTK(streamlines, pStreamlines):
-    polydata = vtk.vtkPolyData()
-
-    lines = vtk.vtkCellArray()
-    points = vtk.vtkPoints()
+def main():
+    #-----------------
+    # Parse arguments
+    #-----------------
+    parser = argparse.ArgumentParser(
+        description="Applies trk2vtk conversion to input directory",
+        epilog="Written by Alex Pastor alexandre.pastor@mcgill.ca")
     
-    ptCtr = 0
-       
-    for i in range(0,len(streamlines)):
-        if((i % 10000) == 0):
-                print(str(i) + '/' + str(len(streamlines)))
-        
-        
-        line = vtk.vtkLine()
-        line.GetPointIds().SetNumberOfIds(len(streamlines[i]))
-        for j in range(0,len(streamlines[i])):
-            points.InsertNextPoint(streamlines[i][j])
-            linePts = line.GetPointIds()
-            linePts.SetId(j,ptCtr)
-            
-            ptCtr += 1
-            
-        lines.InsertNextCell(line)
-                               
-    polydata.SetLines(lines)
-    polydata.SetPoints(points)
+    parser.add_argument(
+        'inputFile',
+        help='Contains whole-brain tractography as Trackvis TRK file(s).')
+    parser.add_argument(
+        'outputDir',
+        help='The output directory should be a new empty directory. It will be created if needed.')
+    args = parser.parse_args() 
     
-    writer = vtk.vtkPolyDataWriter()
-    writer.SetFileName(pStreamlines)
-    writer.SetInputData(polydata)
-    writer.Write()
+    if not os.path.exists(args.inputFile):
+        print("Error: Input File", args.inputFile, "does not exist.")
+        exit()
+    in_data = args.inputFile   
+    out_data = args.outputDir
+    if not os.path.exists(out_data):
+        print("Output Directory", out_data, "does not exist, creating it.")
+        os.makedirs(out_data)
     
-    print('Wrote streamlines to ' + writer.GetFileName())
+    out1 = os.path.basename(args.inputFile)
+    out2 = os.path.splitext(out1)[0]
+    
+    print("Starting TRK to VTK computation.")
+    print("")
+    print("=====input file======\n", in_data)
+    print("=====output file=====\n", os.path.join(out_data, out2 + '.vtk'))
+    print("==========================")    
 
+######################
+## Does conversion and saves
+    tracto = load_trk(in_data,in_data,to_space='lpsmm',bbox_valid_check=False)
+    save_tractogram(tracto,os.path.join(out_data, out2 + '.vtk'),bbox_valid_check=False)
+    
 
-#--
-#Dr. rer. nat. Nico Hoffmann
-#Computational Radiation Physics
+if __name__ == '__main__':
+    main()

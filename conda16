@@ -32,7 +32,7 @@ conda list
 
 ## prebuild
 #conda-env export > environment.yml 
-## then build
+## then build -- probably redundant -- see instead the alternative def. in the same branch
 #singularity build ~/Documents/singularity-master/conda16.sif
 #conda-env create --name testenv --file=environment.yml
 #conda activate testenv
