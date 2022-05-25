@@ -29,7 +29,7 @@ while getopts ":hq:" option; do
 https://github.com/SlicerDMRI/whitematteranalysis/blob/master/doc/subject-specific-tractography-parcellation.md
 This directory contains ORG atlas contains an 800-cluster parcellation of the entire white matter and an anatomical fiber tract parcellation (~2.5GB)
 
-2) Ofer Pasternak Free-Water libraries (Not freely distributed and hardwired for now)
+2) Ofer Pasternak Free-Water libraries (Not freely distributed-Peter Savadjiev and hardwired for now to directory wma_done/)
 
 3) Path to the singularity image 
 ** Hardwired for now
@@ -50,15 +50,30 @@ e.g sub-3513788
 
 
 # Additional info: singularity image main dependencies
-#################################################
-# 3DSlicer
-# trk2vtk_sls.py
-# xvfb-run-safe.sh
-# pyradiomics
-# Pasternak's Free-Water analysis
+######################################################
 
-# Matlab (Is not inside singularity - loads as module Matlab 2020a * Verify user license is up to date)
+# 3DSlicer (4.10)
+https://slicer.readthedocs.io/en/latest/user_guide/getting_started.html
+
+# trk2vtk_sls.py
+https://dipy.org/documentation/1.4.1./reference/dipy.tracking/
+
+# xvfb-run-safe.sh
+https://stackoverflow.com/questions/30332137/xvfb-run-unreliable-when-multiple-instances-invoked-in-parallel
+
+# pyradiomics
+https://pyradiomics.readthedocs.io/en/latest/
+
+# zhangfang whitematteranalysis libraries
+https://github.com/SlicerDMRI/whitematteranalysis#wma-installation
+
+# Pasternak's Free-Water analysis
+https://pubmed.ncbi.nlm.nih.gov/19623619/
+
+# Matlab ** OBS is not inside singularity - loads as module Matlab 2020a * Verify user license is up to date
 https://docs.alliancecan.ca/wiki/MATLAB
+
+
 
 ### QC argument -q[0-2] specify prcss. being not performed (0), performed (1), or exclussively performed (2) after wma_pipeline    "
 
@@ -263,5 +278,5 @@ fi
 
 
 DURATION=$[ $(date +%s) - ${START} ]
-echo "CNPLL.sh took: $((DURATION/60))min and $((DURATION%60))sec to execute"
+echo "CNPLLC.sh took: $((DURATION/60))min and $((DURATION%60))sec to execute"
 
