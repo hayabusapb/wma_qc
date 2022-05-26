@@ -1,5 +1,5 @@
-# wma_pipeline
-SJN22.sif  basic documentation. Alexandre Pastor-Bernier 26 Jan 2022 (McGill University)
+# White Matter and Diffusion Metrics Pipeline
+Singularity image basic documentation. Alexandre Pastor-Bernier 26 Jan 2022 (McGill University)
 ########################################################################################
                                 
 **# Original slicer recipe provided by Lex Hutton (10 Dec 2021)**                                                                                                        
