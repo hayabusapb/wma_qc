@@ -15,18 +15,3 @@ done
 
 
 
-
-##e.g Backlashes in dir IN important, OUT should be a file
-#SID=sub-3602428
-#IN=/home/hayabusa/Documents/sdone_master/${SID}/${SID}_mask/
-#Slicer_path=/home/hayabusa/Slicer/Slicer 
-#OUT=/home/hayabusa/Documents/sdone_master/${SID}/${SID}_bmask/
-#REF=/home/hayabusa/${SID}/ses-2/DTI_Metrics/${SID}_ses-2__fa.nii.gz
-
-
-
-
-## Issues strange error Slicer_11:
-#No writer found to write file QVariant(QString, "/home/hayabusa/Documents/sdone_master/sub-3602428/sub-3602428_bmask") of type "VolumeFile"
-
-
