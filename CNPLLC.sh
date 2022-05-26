@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 #SBATCH --array=1-995
-#SBATCH --time=03:30:00
+#SBATCH --time=03:00:00
 #SBATCH --account=rpp-aevans-ab
 #SBATCH --requeue
 #SBATCH --mem-per-cpu=80GB
@@ -9,27 +9,42 @@
 #pll lookup dir ## OBS* make sure SID has list of subject without _ses2 appended
 
 SID=$(sed -n "$SLURM_ARRAY_TASK_ID"p SID_3350.txt)
-
+#SID='sub-2957636'
 # Get the options
 QL=""
-VAL=1 # default QC will be done
+VAL=1 # default QC will be done:q
 
-while getopts ":hq:" option; do
+while getopts ":hq:i:o:" option; do
    case $option in
       h) # display Help
          echo "Usage: CNPLLC.sh 
-### Creates read-output input and output dir in wma_pipe for pll 
-(Alexandre_Pastor_Jan2022 - McGill MNI-BIC)
+         
+### wma_pipe and diffusion metrics pipeline for Tractoflow 
+re_Pastor_Jan2022 - McGill MNI-BIC)
+
+### Syntax:
+./CNPLLC.sh [-i|o|q|h]
+
+Mandatory arguments
+ 
+-i: double quoted string with (combined) squashfs overlay 
+E.g '--overlay /lustre03/project/6008063/ahutton/tractoflow_out/tractoflow_3150.squashfs:ro --overlay /lustre03/project/6008063/ahutton/tractoflow_out/tractoflow_3200.squashfs:ro'
+
+-o: double quoted path to output folder
+E.g '~/scratch/sdone_master_0t3350'
+
+-q: quality control, specify process being performed: (1), not performed (0), or exclussively performed (2) after wma_pipeline 
+
+-h: help
 
 ### Requirements:
-
 - Input 
 
 1) scratch containing the directory WMA_tutorial_data, found in p.2 from Lauren ODonnells whitematter analysis documentation
 https://github.com/SlicerDMRI/whitematteranalysis/blob/master/doc/subject-specific-tractography-parcellation.md
 This directory contains ORG atlas contains an 800-cluster parcellation of the entire white matter and an anatomical fiber tract parcellation (~2.5GB)
 
-2) Ofer Pasternak Free-Water libraries (Not freely distributed-Peter Savadjiev and hardwired for now to directory wma_done/)
+2) Ofer Pasternak Free-Water directory containing Matlab scripts (MIT License pending - Peter Savadjiev) running with external Matlab 2020a.  Hardwired for now to directory ~/wma_done/) * This folder can be found in the image in /home/Free-Water/
 
 3) Path to the singularity image 
 ** Hardwired for now
@@ -47,34 +62,22 @@ e.g sub-3513788
     pipe will run with two subjects - set SBATCH --array accordingly
  
 - Output 
-
-
 # Additional info: singularity image main dependencies
 ######################################################
-
 # 3DSlicer (4.10)
 https://slicer.readthedocs.io/en/latest/user_guide/getting_started.html
-
 # trk2vtk_sls.py
 https://dipy.org/documentation/1.4.1./reference/dipy.tracking/
-
 # xvfb-run-safe.sh
 https://stackoverflow.com/questions/30332137/xvfb-run-unreliable-when-multiple-instances-invoked-in-parallel
-
 # pyradiomics
 https://pyradiomics.readthedocs.io/en/latest/
-
 # zhangfang whitematteranalysis libraries
 https://github.com/SlicerDMRI/whitematteranalysis#wma-installation
-
 # Pasternak's Free-Water analysis
 https://pubmed.ncbi.nlm.nih.gov/19623619/
-
 # Matlab ** OBS is not inside singularity - loads as module Matlab 2020a * Verify user license is up to date
 https://docs.alliancecan.ca/wiki/MATLAB
-
-
-
 ### QC argument -q[0-2] specify prcss. being not performed (0), performed (1), or exclussively performed (2) after wma_pipeline    "
 
         exit 0
@@ -94,6 +97,14 @@ https://docs.alliancecan.ca/wiki/MATLAB
         echo "*****ONLY Quality control will be performed"  
       fi
       ;;
+    
+      i) # input 
+      RR="${OPTARG}"
+      ;;
+      o) # output
+      LOCAL=${OPTARG}
+      echo $LOCAL
+      ;;
       :)                                    # If expected argument omitted:
         echo "Error: -${OPTARG} requires an argument."
         exit_abnormal                       # Exit abnormally.
@@ -104,6 +115,10 @@ https://docs.alliancecan.ca/wiki/MATLAB
    esac
 done
 
+
+#RR=${1}
+#LOCAL=${2}
+
 cleanS=$(export SINGULARITY_BIND="")
 
 START="$(date +%s)"
@@ -113,6 +128,9 @@ module load singularity/3.8 matlab/2020a
 
 # clear sing bindings
 $cleanS
+#
+
+echo "working on" $RR "output to" $LOCAL
 
 # working dirs
 OD=$SLURM_TMPDIR/${SID}
@@ -120,12 +138,12 @@ SD=${OD}/trk2vtk/
 MV=${OD}/vtk2vtp/
 ATLAS=~/scratch/WMA_tutorial_data
 # singularity image
-IMG=~/wma_done/SJN_4AP22.sif
+IMG=~/wma_done/SJN_25M22.sif
 
 # Diffusion measure dirs
 IN=${OD}/${SID}_pp/AnatomicalTracts
 
-RR='--overlay /lustre03/project/6008063/ahutton/tractoflow_out/tractoflow_3150.squashfs:ro --overlay /lustre03/project/6008063/ahutton/tractoflow_out/tractoflow_3200.squashfs:ro --overlay /lustre03/project/6008063/ahutton/tractoflow_out/tractoflow_3250.squashfs:ro --overlay /lustre03/project/6008063/ahutton/tractoflow_out/tractoflow_3300.squashfs:ro --overlay /lustre03/project/6008063/ahutton/tractoflow_out/tractoflow_3350.squashfs:ro'
+#RR='--overlay /lustre03/project/6008063/ahutton/tractoflow_out/tractoflow_3150.squashfs:ro --overlay /lustre03/project/6008063/ahutton/tractoflow_out/tractoflow_3200.squashfs:ro --overlay /lustre03/project/6008063/ahutton/tractoflow_out/tractoflow_3250.squashfs:ro --overlay /lustre03/project/6008063/ahutton/tractoflow_out/tractoflow_3300.squashfs:ro --overlay /lustre03/project/6008063/ahutton/tractoflow_out/tractoflow_3350.squashfs:ro'
 
 RT=/tractoflow_results/${SID}_ses-2
 
@@ -145,12 +163,12 @@ DWI=${OP}/${SID}_ses-2__dwi_dti.nii.gz
 Bval=${OP}/${SID}_ses-2__bval_dti
 Bvec=${OP}/${SID}_ses-2__bvec_dti
 Mask=${OP}/${SID}_ses-2__pft_seeding_mask.nii.gz
+FF=${ATLAS}/Free-Water
+LOCAL=~/scratch/sdone_master_test
 
-LOCAL=~/scratch/sdone_master_0t3350
+Choco="cd('$FF');addpath(genpath(cd));FreeWater_OneCase('$SID', '$DWI', '$Bval', '$Bvec', '$Mask', '$FWOUT');exit;"
 
-Choco="cd('~/wma_done/Free-Water');addpath(genpath(cd));FreeWater_OneCase('$SID', '$DWI', '$Bval', '$Bvec', '$Mask', '$FWOUT');exit;"
-
-mkdir -p -m777 $SD $MV $BOUT $OUT $MOUT $OP $MOUT2 $FWOUT
+mkdir -p -m777 $SD $MV $BOUT $OUT $MOUT $OP $MOUT2 $FWOUT 
 echo $SID $SD $MV $BOUT $OUT $MOUT 
 
 if [ $QL -ne 2 ];
@@ -172,7 +190,9 @@ then
         ## PASTERNAK FW - APB 27MAR2022#
         $cleanS
 
- singularity exec ${RR} --bind $OP:/Mount_OP $IMG cp -n $RT/Extract_DTI_Shell/${SID}_ses-2__dwi_dti.nii.gz $RT/Extract_DTI_Shell/${SID}_ses-2__bval_dti $RT/Extract_DTI_Shell/${SID}_ses-2__bvec_dti $RT/PFT_Seeding_Mask/${SID}_ses-2__pft_seeding_mask.nii.gz /Mount_OP
+ 	singularity exec ${RR} --bind $OP:/Mount_OP $IMG cp -n $RT/Extract_DTI_Shell/${SID}_ses-2__dwi_dti.nii.gz $RT/Extract_DTI_Shell/${SID}_ses-2__bval_dti $RT/Extract_DTI_Shell/${SID}_ses-2__bvec_dti $RT/PFT_Seeding_Mask/${SID}_ses-2__pft_seeding_mask.nii.gz /Mount_OP
+
+	mkdir -p -m777 ${FF} && singularity exec ${RR} --bind ${FF}:/Mount_FF $IMG cp -r /home/Free-Water/ /Mount_FF
 
         matlab -nodisplay -nojvm -nosplash -r "$Choco"
 
@@ -279,4 +299,3 @@ fi
 
 DURATION=$[ $(date +%s) - ${START} ]
 echo "CNPLLC.sh took: $((DURATION/60))min and $((DURATION%60))sec to execute"
-
