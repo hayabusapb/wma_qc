@@ -72,7 +72,7 @@ https://dipy.org/documentation/1.4.1./reference/dipy.tracking/
 https://stackoverflow.com/questions/30332137/xvfb-run-unreliable-when-multiple-instances-invoked-in-parallel
 # pyradiomics
 https://pyradiomics.readthedocs.io/en/latest/
-# zhangfang whitematteranalysis libraries
+# zhangfang whitematteranalysis libraries (wm_apply_ORG_atlas_to_subject.sh, wm_preprocess_all.py, wm_*)
 https://github.com/SlicerDMRI/whitematteranalysis#wma-installation
 # Pasternak's Free-Water analysis
 https://pubmed.ncbi.nlm.nih.gov/19623619/
