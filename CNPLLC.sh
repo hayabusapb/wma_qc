@@ -44,18 +44,15 @@ E.g '~/scratch/sdone_master_0t3350'
 https://github.com/SlicerDMRI/whitematteranalysis/blob/master/doc/subject-specific-tractography-parcellation.md
 This directory contains ORG atlas contains an 800-cluster parcellation of the entire white matter and an anatomical fiber tract parcellation (~2.5GB)
 
-2) Ofer Pasternak Free-Water directory containing Matlab scripts (MIT License pending - Peter Savadjiev) running with external Matlab 2020a.  Hardwired for now to directory ~/wma_done/) * This folder can be found in the image in /home/Free-Water/
-
-3) Path to the singularity image 
+2) Path to the singularity image 
 ** Hardwired for now
 IMG=~/wma_done/SJN_4AP22.sif
 
-4) Path to squashfs
-** Hardwired for now
-RR=/lustre03/project/6008063/neurohub/ukbb/imaging/.tractoflow/neurohub_ukbb_tractoflow_1.squashfs
-NOTE- the number of files determines the size of the array.
+3) Path to squashfs
+RR='/lustre03/project/6008063/neurohub/ukbb/imaging/.tractoflow/neurohub_ukbb_tractoflow_1.squashfs'
+NOTE- the number of files determines the size of the array. 
 
-5) Subject List for slurm: e.g SID.txt subjects:
+4) Subject List for slurm: e.g SID.txt subjects:
 txt file #rows per subj. 
 e.g sub-3513788
     sub-3538534
