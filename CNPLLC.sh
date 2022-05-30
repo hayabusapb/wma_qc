@@ -53,10 +53,12 @@ RR='/lustre03/project/6008063/neurohub/ukbb/imaging/.tractoflow/neurohub_ukbb_tr
 NOTE- the number of files determines the size of the array. 
 
 4) Subject List for slurm: e.g SID.txt subjects:
-txt file #rows per subj. 
-e.g sub-3513788
-    sub-3538534
-    pipe will run with two subjects - set SBATCH --array accordingly
+txt file #rows/subj. 
+e.g  
+RR='--overlay /lustre03/project/6008063/ahutton/tractoflow_out/tractoflow_4250.squashfs:ro --overlay /lustre03/project/6008063/ahutton/tractoflow_out/tractoflow_4350.squashfs:ro'
+LOCAL=~/scratch/sdone_master_0t4550
+sbatch ./CNPLLC.sh -i "$RR" -o "$LOCAL" -q 0
+**SET SBATCH array and $SLURM_ARRAY_TASK_ID (SID.txt) accordingly
  
 - Output 
 # Additional info: singularity image main dependencies
