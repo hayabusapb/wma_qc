@@ -24,43 +24,38 @@ Steve Pieper, Lauren ODonnell and Peter Savadjiev provided assistance and suppor
 
 **OUTPUT DOCUMENTATION**
 
-The O’Donnell pipeline produces basically 5 types of data output:
-Anatomical tracts (73, vtp, Subject Space)
+The O’Donnell pipeline produces 3 types of data output:
 
+1) Anatomical tracts (73, vtp, Subject Space)
 
-FiberClustering:
+2) FiberClustering:
 
 - InitialClusters (800, vtp, Atlas Space)
 
-- Separated Clusters ( vtp, Atlas Space)
+- Separated Clusters (vtp, Atlas Space)
 
 - OutlierRemoved Clusters (vtp, Atlas Space)
 
 - TransformedClusters (vpt, Hard-transform Subject Space)
 
-
-TractRegistration:
+3) TractRegistration:
 
 -Output tractografy tensor files
 
 
-The Free-Water produces:
+The Free-Water and Diffusion Metrics part produces 6 types of data output:
 
-A FW whole brain nifty file,
+1) FW map on white matter skeletton, nifty 
 
-TensorFWCorrected, nifty
+2) TensorFWCorrected, nifti
 
-Negative Eigenvector Map, nifty
+3) Negative Eigenvector Map, nifti
 
-TensorDTI No Negative, nifty
+4) TensorDTI No Negative, nifti
 
+5) Binary masks for anatomical tracts (80, nifties)
 
-
-The Diffusion measure bit produces:
-
-
--Binary masks for anatomical tracts (80, nifties)
--Diffusion output files (6 csv per subject: FA, FW, AD,MD, RD, GA).
+6) Diffusion output files (6 csv per subject: FA, FW, AD,MD, RD, GA).
 Each csv contains pyradiomics 1st order metrics for 73 anatomical tracts
 
 
