@@ -1,7 +1,126 @@
-# White Matter and Diffusion Metrics Pipeline
-Singularity image basic documentation. Alexandre Pastor-Bernier 26 Jan 2022 (McGill University)
-########################################################################################
-                                
+#############################################################################################
+# White Matter and FreeWater Diffusion Metrics Pipeline (WMA_FW)
+#
+# Alexandre Pastor-Bernier 26 Jan 2022 (McGill University)
+##############################################################################################
+
+
+SYNOPSIS
+########
+
+This pipeline uses Tractoflow derivatives as input to perform whole-brain tractography parcellation with the whitematteranalysis (WMA) software and the anatomically curated O'Donnell Research Group (ORG) white matter atlas. The pipeline obtains separatelly free-water maps which are then applied to binary masks of anatomical tracts derived from O'Donnell tract segmentation (Pasternak). Average diffusion metrics are obtained and .csv files are produced for each tract (Pyradiomics).
+
+https://github.com/SlicerDMRI/whitematteranalysis/blob/master/doc/subject-specific-tractography-parcellation.md
+
+https://pyradiomics.readthedocs.io/en/latest/
+
+Pasternak O, Sochen N, Gur Y, Intrator N, Assaf Y. Free water elimination and mapping from diffusion MRI. Magn Reson Med. 2009 Sep;62(3):717-30. doi: 10.1002/mrm.22055. PMID: 19623619.
+
+Zhang, F., Wu, Y., Norton, I., Rathi, Y., Makris, N., O'Donnell, LJ. 
+An anatomically curated fiber clustering white matter atlas for consistent white matter tract parcellation across the lifespan. 
+NeuroImage, 2018 (179): 429-447
+
+Acknowledgements
+##################
+
+Alain Dagher, JB Poline, Ofer Pasternak, Peter Savadjev, Fan Zhang, Andras Lasso,
+Steve Pieper, Lauren ODonnell and Peter Savadjiev provided assistance and support developing this pipeline
+
+######################
+# Output documentation
+######################
+
+The O’Donnell pipeline produces basically 5 types of data output:
+
+Anatomical tracts (73, vtp, Subject Space)
+
+
+FiberClustering:
+
+- InitialClusters (800, vtp, Atlas Space)
+
+- Separated Clusters ( vtp, Atlas Space)
+
+- OutlierRemoved Clusters (vtp, Atlas Space)
+
+- TransformedClusters (vpt, Hard-transform Subject Space)
+
+
+TractRegistration:
+
+-Output tractografy tensor files
+
+
+The Free-Water produces:
+
+A FW whole brain nifty file,
+
+TensorFWCorrected, nifty
+
+Negative Eigenvector Map, nifty
+
+TensorDTI No Negative, nifty
+
+
+
+The Diffusion measure bit produces:
+
+
+-Binary masks for anatomical tracts (80, nifties)
+
+
+-Diffusion output files (6 csv per subject: FA, FW, AD,MD, RD, GA).
+
+Each csv contains pyradiomics 1st order metrics for 73 anatomical tracts
+
+
+* Further detail with a tree display s:
+
+Each subject should has 36 directories, 5031 files if complete.
+(base) hayabusa@hayabusa-5530:~/UKBB_WMA/localscratch$ tree -d .
+.
+└── hayabusa.5812127.0
+    └── sub-1964679
+        ├── FW_Measures
+        │   └── sub-1964679_tmp
+        ├── FW_Source
+        ├── sub-1964679
+        │   └── Diffusion_Measures
+        │       └── sub-1964679
+        ├── sub-1964679_bmask
+        ├── sub-1964679_pp
+        │   ├── AnatomicalTracts
+        │   ├── FiberClustering
+        │   │   ├── InitialClusters
+        │   │   │   └── sub-1964679_pp_reg
+        │   │   ├── OutlierRemovedClusters
+        │   │   │   └── sub-1964679_pp_reg_outlier_removed
+        │   │   ├── SeparatedClusters
+        │   │   │   ├── tracts_commissural
+        │   │   │   ├── tracts_left_hemisphere
+        │   │   │   └── tracts_right_hemisphere
+        │   │   └── TransformedClusters
+        │   │       └── sub-1964679_pp
+        │   └── TractRegistration
+        │       └── sub-1964679_pp
+        │           ├── iteration_00001_sigma_00030
+        │           ├── iteration_00002_sigma_00030
+        │           ├── iteration_00003_sigma_00030
+        │           ├── iteration_00004_sigma_00030
+        │           ├── iteration_00005_sigma_00010
+        │           ├── iteration_00006_sigma_00010
+        │           ├── iteration_00007_sigma_00007
+        │           ├── iteration_00008_sigma_00007
+        │           ├── iteration_00009_sigma_00005
+        │           ├── iteration_00010_sigma_00005
+        │           └── output_tractography
+        └── vtk2vtp
+
+
+##################################################################
+# DEBUG ITERATIONS SINCE BUILD STAGE
+##################################################################
+
 **# Original slicer recipe provided by Lex Hutton (10 Dec 2021)**                                                                                                        
 wma_slicer
 https://github.com/hayabusapb/wma_qc/blob/Singularity/wma_slicer                                                                                                                                            
