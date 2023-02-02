@@ -40,7 +40,7 @@ The O’Donnell pipeline produces 3 types of data output:
 
 3) TractRegistration:
 
--Output tractografy tensor files
+- Output tractografy tensor files
 
 
 The Free-Water and Diffusion Metrics part produces 6 types of data output:
@@ -63,6 +63,7 @@ Each csv contains pyradiomics 1st order metrics for 73 anatomical tracts
 
 Each subject should has 36 directories, 5031 files if complete.
 (base) hayabusa@hayabusa-5530:~/UKBB_WMA/localscratch$ tree -d .
+
 .
 └── hayabusa.5812127.0
     └── sub-1964679
