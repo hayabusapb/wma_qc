@@ -3,8 +3,7 @@
 #
 # Alexandre Pastor-Bernier 26 Jan 2022 (McGill University)
 
-SYNOPSIS
-########
+**SYNOPSIS**
 
 This pipeline uses Tractoflow derivatives as input to perform whole-brain tractography parcellation with the whitematteranalysis (WMA) software and the anatomically curated O'Donnell Research Group (ORG) white matter atlas. The pipeline obtains separatelly free-water maps which are then applied to binary masks of anatomical tracts derived from O'Donnell tract segmentation (Pasternak). Average diffusion metrics are obtained and .csv files are produced for each tract (Pyradiomics).
 
@@ -18,15 +17,14 @@ Zhang, F., Wu, Y., Norton, I., Rathi, Y., Makris, N., O'Donnell, LJ.
 An anatomically curated fiber clustering white matter atlas for consistent white matter tract parcellation across the lifespan. 
 NeuroImage, 2018 (179): 429-447
 
-ACKNOWLEDGEMENTS
+**ACKNOWLEDGEMENTS**
 ################
 
 Alain Dagher, JB Poline, Ofer Pasternak, Peter Savadjev, Fan Zhang, Andras Lasso,
 Steve Pieper, Lauren ODonnell and Peter Savadjiev provided assistance and support developing this pipeline
 
 
-# Output documentation
-######################
+**OUTPUT DOCUMENTATION**
 
 The O’Donnell pipeline produces basically 5 types of data output:
 
