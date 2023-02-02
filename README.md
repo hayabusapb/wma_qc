@@ -1,6 +1,5 @@
 
 # WHITE MATTER AND FW DIFFUSION METRICS PIPELINE (WMA_FW)
-#
 # Alexandre Pastor-Bernier 26 Jan 2022 (McGill University)
 
 **SYNOPSIS**
@@ -18,7 +17,6 @@ An anatomically curated fiber clustering white matter atlas for consistent white
 NeuroImage, 2018 (179): 429-447
 
 **ACKNOWLEDGEMENTS**
-################
 
 Alain Dagher, JB Poline, Ofer Pasternak, Peter Savadjev, Fan Zhang, Andras Lasso,
 Steve Pieper, Lauren ODonnell and Peter Savadjiev provided assistance and support developing this pipeline
@@ -27,7 +25,6 @@ Steve Pieper, Lauren ODonnell and Peter Savadjiev provided assistance and suppor
 **OUTPUT DOCUMENTATION**
 
 The O’Donnell pipeline produces basically 5 types of data output:
-
 Anatomical tracts (73, vtp, Subject Space)
 
 
@@ -63,10 +60,7 @@ The Diffusion measure bit produces:
 
 
 -Binary masks for anatomical tracts (80, nifties)
-
-
 -Diffusion output files (6 csv per subject: FA, FW, AD,MD, RD, GA).
-
 Each csv contains pyradiomics 1st order metrics for 73 anatomical tracts
 
 
