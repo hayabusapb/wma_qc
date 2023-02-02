@@ -107,9 +107,7 @@ Each subject should has 36 directories, 5031 files if complete.
         └── vtk2vtp
 
 
-##################################################################
-# DEBUG ITERATIONS SINCE BUILD STAGE
-##################################################################
+**DEBUG ITERATIONS SINCE BUILD STAGE**
 
 **# Original slicer recipe provided by Lex Hutton (10 Dec 2021)**                                                                                                        
 wma_slicer
