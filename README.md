@@ -1,9 +1,7 @@
-#############################################################################################
-# White Matter and FreeWater Diffusion Metrics Pipeline (WMA_FW)
+
+# WHITE MATTER AND FW DIFFUSION METRICS PIPELINE (WMA_FW)
 #
 # Alexandre Pastor-Bernier 26 Jan 2022 (McGill University)
-##############################################################################################
-
 
 SYNOPSIS
 ########
@@ -20,13 +18,13 @@ Zhang, F., Wu, Y., Norton, I., Rathi, Y., Makris, N., O'Donnell, LJ.
 An anatomically curated fiber clustering white matter atlas for consistent white matter tract parcellation across the lifespan. 
 NeuroImage, 2018 (179): 429-447
 
-Acknowledgements
-##################
+ACKNOWLEDGEMENTS
+################
 
 Alain Dagher, JB Poline, Ofer Pasternak, Peter Savadjev, Fan Zhang, Andras Lasso,
 Steve Pieper, Lauren ODonnell and Peter Savadjiev provided assistance and support developing this pipeline
 
-######################
+
 # Output documentation
 ######################
 
